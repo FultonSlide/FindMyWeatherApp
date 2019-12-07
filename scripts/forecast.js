@@ -7,11 +7,12 @@ const getCity = async (city) => {
 
     const response = await fetch(base + query);
     const data = await response.json();
+
     return data[0];
 };
 
 //Get Weather Information
-const getConditions = async (cityKey) => {
+const getWeather = async (cityKey) => {
     const base = 'http://dataservice.accuweather.com/currentconditions/v1/';
     const query = `${cityKey}?apikey=${key}`;
 
@@ -20,8 +21,3 @@ const getConditions = async (cityKey) => {
 
     return data;
 };
-
-getCity('Melbourne')
-    .then(data => getConditions(data.Key))
-    .then(data => console.log(data))
-    .catch(err => console.log(err));

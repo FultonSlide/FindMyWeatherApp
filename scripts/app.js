@@ -41,6 +41,7 @@ const updateCity = async (city) => {
     return { cityDetails,cityWeather };
 };
 
+//Listens for form submission
 cityForm.addEventListener('submit', (e) => {
     //Prevent default action
     e.preventDefault();
@@ -49,9 +50,18 @@ cityForm.addEventListener('submit', (e) => {
     const city = e.target.city.value.trim().toLowerCase();
     cityForm.reset();
 
+    //Set local storage
+    localStorage.setItem('city', city);
+
     //Update UI with city info
     updateCity(city)
         .then(data => updateUI(data))
         .catch(err => console.log(err));
 });
+
+if(localStorage.getItem('city')){
+    updateCity(localStorage.getItem('city'))
+        .then(data => updateUI(data))
+        .catch(err => console.log(err));
+}
 

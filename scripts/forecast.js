@@ -1,14 +1,18 @@
 class Forecast{
     constructor(){
-        this.key = 'rzGrwJVsbd3n5If4Zh3VEL2vUraLriKr';
+        this.key = 'i3khXTCPD2qTyYrKosuUtRTURgPoGVDh';
         this.weatherURI = 'http://dataservice.accuweather.com/currentconditions/v1/';
         this.cityURI = 'http://dataservice.accuweather.com/locations/v1/cities/search';
+        this.cityDetails = '';
+        this.cityWeather = '';
     }
 
     //Returns the weather details of the city the user has entered
     async updateCity(city){
         const cityDetails = await this.getCity(city);
         const cityWeather = await this.getWeather(cityDetails.Key);
+        this.cityDetails = await cityDetails;
+        this.cityWeather = await cityWeather;
         return { cityDetails,cityWeather };
     }
 

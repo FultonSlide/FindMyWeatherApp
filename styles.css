@@ -4,7 +4,7 @@ body {
     font-size: 0.8em;
 }
 .form-control{
-    max-width: 400px;
+    max-width: 450px;
     margin: 0 auto;
 }
 .content {
@@ -15,10 +15,18 @@ body {
     max-width: 400px;
     margin: 0 5px;
 }
-.icon {
+.icon-weather {
     position: relative;
     top: -50px;
     border-radius: 50%;
     width: 100px;
     margin-bottom: -50px;
+}
+/* .time-weather {
+    position: absolute;
+} */
+.current-time {
+    position: relative;
+    top: auto;
+    left: auto;
 }

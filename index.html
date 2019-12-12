@@ -17,7 +17,7 @@
             <input type="text" name="city" class="form-control p-4">
         </form>
         
-        <div class="content">
+        <div class="content d-none">
             <div class="card shadow-sm rounded">
                 <img src="https://via.placeholder.com/400x300" alt="placeholder" class="time card-img-top">
                 <div class="icon bg-light mx-auto text-center">
@@ -34,11 +34,15 @@
             </div>
 
             <div class="card shadow-sm rounded">
-                <img src="https://via.placeholder.com/400x300" alt="placeholder" class="time card-img-top">
-                <div class="icon bg-light mx-auto text-center">
+                <div class="text-muted text-uppercase text-center current-time">
+                    <div class="my-3">Local Time:</div>
+                    <div class="local-time"></div>
+                </div>
+                <img src="https://via.placeholder.com/400x300" alt="placeholder" class="time-weather card-img-top">
+                <div class="icon-weather bg-light mx-auto text-center">
                     <img src="" alt="">
                 </div>
-                <div class="text-muted text-uppercase text-center details">
+                <div class="text-muted text-uppercase text-center details-weather">
                     <h5 class="my-3">City name</h5>
                     <div class="my-3">Weather conditions</div>
                     <div class="display-4 my-4">
@@ -65,7 +69,13 @@
         </div>
     </div>
     
+    <!-- Date-fns library -->
+    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
+    <!-- Time JS Class -->
+    <script src="scripts/time.js"></script>
+    <!-- Forecast JS Class -->
     <script src="scripts/forecast.js"></script>
+    <!-- App JS -->
     <script src="scripts/app.js"></script>
 </body>
 </html>

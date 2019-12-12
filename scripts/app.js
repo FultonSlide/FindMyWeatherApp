@@ -1,12 +1,30 @@
 const cityForm = document.querySelector('form');
 const card = document.querySelector('.card');
-const details = document.querySelector('.details');
-const time = document.querySelector('img.time');
-const icon = document.querySelector('.icon img');
+const details = document.querySelector('.details-weather');
+const currentTime = document.querySelector('.current-time');
+const time = document.querySelector('img.time-weather');
+const icon = document.querySelector('.icon-weather img');
+const content = document.querySelector('.content');
 const forecast = new Forecast();
+const cityTime = new Time();
+let timeSet = false;
+
+//Updates the local time of the city in the UI
+const updateTime = (localTime) => {
+    //Setting local time
+    timeSet = localTime !== 'N/A' ? true : false;
+    
+    //Update current time template
+    currentTime.innerHTML = `
+        <div class="my-3">Local Time:</div>
+        <div class="local-time">${localTime}</div>
+    `;
+}
 
 //Updates the UI with the weather information of the city the user has entered
 const updateUI = (data) => {
+
+    console.log(data);
 
     //Destructure properties
     const { cityDetails, cityWeather } = data;
@@ -29,8 +47,8 @@ const updateUI = (data) => {
     `;
 
     //Remove d-none class if present
-    if(card.classList.contains('d-none')){
-        card.classList.remove('d-none');
+    if(content.classList.contains('d-none')){
+        content.classList.remove('d-none');
     }
 };
 
@@ -48,13 +66,31 @@ cityForm.addEventListener('submit', (e) => {
 
     //Update UI with city info
     forecast.updateCity(city)
-        .then(data => updateUI(data))
+        .then(data => {
+            cityTime.getTime(data.cityDetails).then((localTime) => {
+                updateTime(localTime);
+                updateUI(data);
+            }).catch(err => console.log(err));
+        })
         .catch(err => console.log(err));
 });
 
 if(localStorage.getItem('city')){
     forecast.updateCity(localStorage.getItem('city'))
-        .then(data => updateUI(data))
-        .catch(err => console.log(err));
+        .then(data => {
+            cityTime.getTime(data.cityDetails).then((localTime) => {
+                updateTime(localTime);
+                updateUI(data);
+            }).catch(err => console.log(err));
+        }).catch(err => console.log(err));
 }
+
+setInterval(() => {
+    if(timeSet){
+        console.log('local time is set!');
+        cityTime.getTime(forecast.cityDetails).then((data) => {
+            updateTime(data);
+        }).catch(err => console.log(err));
+    }
+}, 10000);
 

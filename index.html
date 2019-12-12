@@ -18,22 +18,39 @@
         </form>
         
         <div class="content d-none">
-            <div class="card shadow-sm rounded">
-                <img src="https://via.placeholder.com/400x300" alt="placeholder" class="time card-img-top">
-                <div class="icon bg-light mx-auto text-center">
-                    <img src="" alt="">
+            <!-- Weather Info -->
+            <div class="weather-info">
+                <div class="info-card card shadow-sm rounded">
+                    <div class="icon bg-light mx-auto text-center">
+                        <img src="" alt="">
+                    </div>
+                    <div class="text-muted text-uppercase text-center details">
+                        <h5 class="my-3">[Weather Warnings]</h5>
+                        <div class="my-3">[Description]</div>
+                        <div class="display-4 my-4">
+                            <span>dets</span>
+                            <span>&deg;C</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-muted text-uppercase text-center details">
-                    <h5 class="my-3">City name</h5>
-                    <div class="my-3">Weather conditions</div>
-                    <div class="display-4 my-4">
-                        <span>temp</span>
-                        <span>&deg;C</span>
+
+                <div class="info-card card shadow-sm rounded">
+                    <div class="icon bg-light mx-auto text-center">
+                        <img src="" alt="">
+                    </div>
+                    <div class="text-muted text-uppercase text-center details">
+                        <h5 class="my-3">City name</h5>
+                        <div class="my-3">Weather conditions</div>
+                        <div class="display-4 my-4">
+                            <span>temp</span>
+                            <span>&deg;C</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card shadow-sm rounded">
+            <!-- Weather Conditions -->
+            <div class="conditions-card card shadow-sm rounded">
                 <div class="text-muted text-uppercase text-center current-time">
                     <div class="my-3">Local Time:</div>
                     <div class="local-time"></div>
@@ -52,25 +69,53 @@
                 </div>
             </div>
 
-            <div class="card shadow-sm rounded">
-                <img src="https://via.placeholder.com/400x300" alt="placeholder" class="time card-img-top">
-                <div class="icon bg-light mx-auto text-center">
-                    <img src="" alt="">
+            <!-- Weather Forecast -->
+            <div class="weather-forecast">
+                <div class="forecast-card card shadow-sm rounded">
+                    <div class="forecast-icon bg-light mx-auto text-center">
+                        <img src="" alt="">
+                    </div>
+                    <div class="text-muted text-uppercase text-center details">
+                        <h5 class="my-3">[Day] [Date]</h5>
+                        <div class="my-3">{Weather Description}</div>
+                        <div class="my-4">
+                            <span>[Min Temp]</span>
+                            <span>[Max Temp]</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-muted text-uppercase text-center details">
-                    <h5 class="my-3">City name</h5>
-                    <div class="my-3">Weather conditions</div>
-                    <div class="display-4 my-4">
-                        <span>temp</span>
-                        <span>&deg;C</span>
+
+                <div class="forecast-card card shadow-sm rounded">
+                    <div class="forecast-icon bg-light mx-auto text-center">
+                        <img src="" alt="">
+                    </div>
+                    <div class="text-muted text-uppercase text-center details">
+                        <h5 class="my-3">[Day] [Date]</h5>
+                        <div class="my-3">{Weather Description}</div>
+                        <div class="my-4">
+                            <span>[Min Temp]</span>
+                            <span>[Max Temp]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forecast-card card shadow-sm rounded">
+                    <div class="forecast-icon bg-light mx-auto text-center">
+                        <img src="" alt="">
+                    </div>
+                    <div class="text-muted text-uppercase text-center details">
+                        <h5 class="my-3">[Day] [Date]</h5>
+                        <div class="my-3">{Weather Description}</div>
+                        <div class="my-4">
+                            <span>[Min Temp]</span>
+                            <span>[Max Temp]</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Date-fns library -->
-    <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
     <!-- Time JS Class -->
     <script src="scripts/time.js"></script>
     <!-- Forecast JS Class -->

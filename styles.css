@@ -11,9 +11,17 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
+.weather-info {
+    display: grid;
+    grid-template-rows: repeat(2, minmax(200px, auto));
+}
+.weather-forecast {
+    display: grid;
+    grid-template-rows: repeat(3, minmax(100px, auto));
+}
 .card {
     max-width: 400px;
-    margin: 0 5px;
+    margin: 5px 10px;
 }
 .icon-weather {
     position: relative;
@@ -22,9 +30,6 @@ body {
     width: 100px;
     margin-bottom: -50px;
 }
-/* .time-weather {
-    position: absolute;
-} */
 .current-time {
     position: relative;
     top: auto;

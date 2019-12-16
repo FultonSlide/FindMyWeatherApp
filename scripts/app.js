@@ -1,13 +1,44 @@
 const cityForm = document.querySelector('form');
 const card = document.querySelector('.card');
 const details = document.querySelector('.details-weather');
+const detailsForecastOne = document.querySelector('.details-forecast-one');
+const detailsForecastTwo = document.querySelector('.details-forecast-two');
+const detailsForecastThree = document.querySelector('.details-forecast-three');
 const currentTime = document.querySelector('.current-time');
 const time = document.querySelector('img.time-weather');
 const icon = document.querySelector('.icon-weather img');
+const forecastIconOne = document.querySelector('.forecast-icon-one img');
+const forecastIconTwo = document.querySelector('.forecast-icon-two img');
+const forecastIconThree = document.querySelector('.forecast-icon-three img');
 const content = document.querySelector('.content');
 const forecast = new Forecast();
 const cityTime = new Time();
 let timeSet = false;
+
+const getDayDate = (epochDate) => {
+    const utcSeconds = epochDate;
+    const d = new Date(0);
+    d.setUTCSeconds(utcSeconds);
+    const weekday = new Array(7);
+
+    weekday[0] = "Sun";
+    weekday[1] = "Mon";
+    weekday[2] = "Tues";
+    weekday[3] = "Wed";
+    weekday[4] = "Thurs";
+    weekday[5] = "Fri";
+    weekday[6] = "Sat";
+
+    const dayOfWeek = weekday[d.getDay()];
+
+    const date = d.getDate();
+    const month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+    const year = d.getFullYear();
+    
+    const dateStr = date + "/" + month + "/" + year;
+
+    return `${dayOfWeek} ${dateStr}`;
+}
 
 //Updates the local time of the city in the UI
 const updateTime = (localTime) => {
@@ -16,7 +47,7 @@ const updateTime = (localTime) => {
     
     //Update current time template
     currentTime.innerHTML = `
-        <div class="my-3">Local Time:</div>
+        <h5 class="my-3">Local Time:</h5>
         <div class="local-time">${localTime}</div>
     `;
 }
@@ -27,21 +58,74 @@ const updateUI = (data) => {
     console.log(data);
 
     //Destructure properties
-    const { cityDetails, cityWeather } = data;
+    const { cityDetails, cityWeather, cityForecast } = data;
 
-    //Update time img & weather icon
-    const timeSrc = cityWeather[0].IsDayTime ? "img/day.svg" : "img/night.svg";
+    getDayDate(cityForecast.DailyForecasts[1].EpochDate);
+
+    //Update img and time text color
+    let timeSrc = null;
+
+    if(cityWeather[0].IsDayTime){
+        timeSrc = "img/day.svg";
+        currentTime.classList.remove('text-white');
+        currentTime.classList.add('text-muted');
+    } else {
+        timeSrc = "img/night.svg";
+        currentTime.classList.remove('text-muted');
+        currentTime.classList.add('text-white');
+    }
+
     const iconSrc = `img/icons/${cityWeather[0].WeatherIcon}.svg`;
+    const iconForecastOneSrc = `img/icons/${cityForecast.DailyForecasts[1].Day.Icon}.svg`;
+    const iconForecastTwoSrc = `img/icons/${cityForecast.DailyForecasts[2].Day.Icon}.svg`;
+    const iconForecastThreeSrc = `img/icons/${cityForecast.DailyForecasts[3].Day.Icon}.svg`;
 
     time.setAttribute('src', timeSrc);
     icon.setAttribute('src', iconSrc);
+    forecastIconOne.setAttribute('src', iconForecastOneSrc);
+    forecastIconTwo.setAttribute('src', iconForecastTwoSrc);
+    forecastIconThree.setAttribute('src', iconForecastThreeSrc);
 
     //Update details template
     details.innerHTML = `
-        <h5 class="my-3">${cityDetails.EnglishName}</h5>
-        <div class="my-3">${cityWeather[0].WeatherText}</div>
-        <div class="display-4 my-4">
+        <h5 class="my-4">${cityDetails.EnglishName}</h5>
+        <div class="my-4">${cityWeather[0].WeatherText}</div>
+        <div class="display-4 my-5">
             <span>${cityWeather[0].Temperature.Metric.Value}</span>
+            <span>&deg;C</span>
+        </div>
+    `;
+
+    //Update forecast UI cards
+    detailsForecastOne.innerHTML = `
+        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[1].EpochDate)}</h5>
+        <div class="my-3">${cityForecast.DailyForecasts[1].Day.LongPhrase}</div>
+        <div class="my-4">
+            <span>Min: ${cityForecast.DailyForecasts[1].Temperature.Minimum.Value}</span>
+            <span>&deg;C</span>
+            <span>Max: ${cityForecast.DailyForecasts[1].Temperature.Maximum.Value}</span>
+            <span>&deg;C</span>
+        </div>
+    `;
+
+    detailsForecastTwo.innerHTML = `
+        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[2].EpochDate)}</h5>
+        <div class="my-3">${cityForecast.DailyForecasts[2].Day.LongPhrase}</div>
+        <div class="my-4">
+            <span>Min: ${cityForecast.DailyForecasts[2].Temperature.Minimum.Value}</span>
+            <span>&deg;C</span>
+            <span>Max: ${cityForecast.DailyForecasts[2].Temperature.Maximum.Value}</span>
+            <span>&deg;C</span>
+        </div>
+    `;
+
+    detailsForecastThree.innerHTML = `
+        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[3].EpochDate)}</h5>
+        <div class="my-3">${cityForecast.DailyForecasts[3].Day.LongPhrase}</div>
+        <div class="my-4">
+            <span>Min: ${cityForecast.DailyForecasts[3].Temperature.Minimum.Value}</span>
+            <span>&deg;C</span>
+            <span>Max: ${cityForecast.DailyForecasts[3].Temperature.Maximum.Value}</span>
             <span>&deg;C</span>
         </div>
     `;
@@ -85,12 +169,11 @@ if(localStorage.getItem('city')){
         }).catch(err => console.log(err));
 }
 
-setInterval(() => {
-    if(timeSet){
-        console.log('local time is set!');
-        cityTime.getTime(forecast.cityDetails).then((data) => {
-            updateTime(data);
-        }).catch(err => console.log(err));
-    }
-}, 10000);
+// setInterval(() => {
+//     if(timeSet){
+//         cityTime.getTime(forecast.cityDetails).then((data) => {
+//             updateTime(data);
+//         }).catch(err => console.log(err));
+//     }
+// }, 10000);
 

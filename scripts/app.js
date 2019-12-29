@@ -41,7 +41,7 @@ const getDayDate = (epochDate) => {
 }
 
 //Updates the local time of the city in the UI
-const updateTime = (localTime) => {
+const updateTime = (data, localTime) => {
     //Setting local time
     timeSet = localTime !== 'N/A' ? true : false;
     
@@ -49,6 +49,7 @@ const updateTime = (localTime) => {
     currentTime.innerHTML = `
         <h5 class="my-3">Local Time:</h5>
         <div class="local-time">${localTime}</div>
+        <h6 class="my-3">${getDayDate(data.cityForecast.DailyForecasts[0].EpochDate)}</h6>
     `;
 }
 
@@ -90,9 +91,19 @@ const updateUI = (data) => {
     details.innerHTML = `
         <h5 class="my-4">${cityDetails.EnglishName}</h5>
         <div class="my-4">${cityWeather[0].WeatherText}</div>
-        <div class="display-4 my-5">
-            <span>${cityWeather[0].Temperature.Metric.Value}</span>
-            <span>&deg;C</span>
+        <div class="my-5">
+            <div class="my-4">
+                <span>Min: ${cityForecast.DailyForecasts[0].Temperature.Minimum.Value}</span>
+                <span>&deg;C</span>
+            </div>
+            <div class='display-4'>
+                <span>${cityWeather[0].Temperature.Metric.Value}</span>
+                <span>&deg;C</span>
+            </div>
+            <div class="my-4">
+                <span>Max: ${cityForecast.DailyForecasts[0].Temperature.Maximum.Value}</span>
+                <span>&deg;C</span>
+            </div>
         </div>
     `;
 
@@ -152,7 +163,7 @@ cityForm.addEventListener('submit', (e) => {
     forecast.updateCity(city)
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
-                updateTime(localTime);
+                updateTime(data, localTime);
                 updateUI(data);
             }).catch(err => console.log(err));
         })
@@ -163,7 +174,7 @@ if(localStorage.getItem('city')){
     forecast.updateCity(localStorage.getItem('city'))
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
-                updateTime(localTime);
+                updateTime(data, localTime);
                 updateUI(data);
             }).catch(err => console.log(err));
         }).catch(err => console.log(err));

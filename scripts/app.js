@@ -15,10 +15,8 @@ const forecast = new Forecast();
 const cityTime = new Time();
 let timeSet = false;
 
-const getDayDate = (epochDate) => {
-    const utcSeconds = epochDate;
-    const d = new Date(0);
-    d.setUTCSeconds(utcSeconds);
+const getDayDate = (dateString) => {
+    const d = new Date(dateString);
     const weekday = new Array(7);
 
     weekday[0] = "Sun";
@@ -49,7 +47,7 @@ const updateTime = (data, localTime) => {
     currentTime.innerHTML = `
         <h5 class="my-3">Local Time:</h5>
         <div class="local-time">${localTime}</div>
-        <h6 class="my-3">${getDayDate(data.cityForecast.DailyForecasts[0].EpochDate)}</h6>
+        <h6 class="my-3">${getDayDate(data.cityForecast.DailyForecasts[0].Date.slice(0, 10))}</h6>
     `;
 }
 
@@ -60,8 +58,6 @@ const updateUI = (data) => {
 
     //Destructure properties
     const { cityDetails, cityWeather, cityForecast } = data;
-
-    getDayDate(cityForecast.DailyForecasts[1].EpochDate);
 
     //Update img and time text color
     let timeSrc = null;
@@ -109,7 +105,7 @@ const updateUI = (data) => {
 
     //Update forecast UI cards
     detailsForecastOne.innerHTML = `
-        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[1].EpochDate)}</h5>
+        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[1].Date.slice(0, 10))}</h5>
         <div class="my-3">${cityForecast.DailyForecasts[1].Day.LongPhrase}</div>
         <div class="my-4">
             <span>Min: ${cityForecast.DailyForecasts[1].Temperature.Minimum.Value}</span>
@@ -120,7 +116,7 @@ const updateUI = (data) => {
     `;
 
     detailsForecastTwo.innerHTML = `
-        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[2].EpochDate)}</h5>
+        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[2].Date.slice(0, 10))}</h5>
         <div class="my-3">${cityForecast.DailyForecasts[2].Day.LongPhrase}</div>
         <div class="my-4">
             <span>Min: ${cityForecast.DailyForecasts[2].Temperature.Minimum.Value}</span>
@@ -131,7 +127,7 @@ const updateUI = (data) => {
     `;
 
     detailsForecastThree.innerHTML = `
-        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[3].EpochDate)}</h5>
+        <h5 class="my-3">${getDayDate(cityForecast.DailyForecasts[3].Date.slice(0, 10))}</h5>
         <div class="my-3">${cityForecast.DailyForecasts[3].Day.LongPhrase}</div>
         <div class="my-4">
             <span>Min: ${cityForecast.DailyForecasts[3].Temperature.Minimum.Value}</span>

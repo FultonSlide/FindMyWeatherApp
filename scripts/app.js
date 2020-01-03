@@ -16,6 +16,7 @@ const cityTime = new Time();
 const countryHolidays = new Holidays();
 let timeSet = false;
 
+//Takes in a dateString and returns the day of the week and date
 const getDayDate = (dateString) => {
     const d = new Date(dateString);
     const weekday = new Array(7);
@@ -39,8 +40,13 @@ const getDayDate = (dateString) => {
     return `${dayOfWeek} ${dateStr}`;
 }
 
+//Updates holiday card with national holidays this month
+const updateHolidayUI = () => {
+    //countryHoliday async call and UI update here...
+};
+
 //Updates the local time of the city in the UI
-const updateTime = (data, localTime) => {
+const updateTimeUI = (data, localTime) => {
     //Setting local time
     timeSet = localTime !== 'N/A' ? true : false;
     
@@ -53,7 +59,7 @@ const updateTime = (data, localTime) => {
 }
 
 //Updates the UI with the weather information of the city the user has entered
-const updateUI = (data) => {
+const updateWeatherUI = (data) => {
 
     console.log(data);
 
@@ -160,9 +166,9 @@ cityForm.addEventListener('submit', (e) => {
     forecast.updateCity(city)
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
-                countryHolidays.getMonthlyHolidays(data.cityDetails);
-                updateTime(data, localTime);
-                updateUI(data);
+                countryHolidays.getHolidays(data.cityDetails); //Sub updateHolidayUI
+                updateTimeUI(data, localTime);
+                updateWeatherUI(data);
             }).catch(err => console.log(err));
         })
         .catch(err => console.log(err));
@@ -172,9 +178,9 @@ if(localStorage.getItem('city')){
     forecast.updateCity(localStorage.getItem('city'))
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
-                countryHolidays.getMonthlyHolidays(data.cityDetails);
-                updateTime(data, localTime);
-                updateUI(data);
+                countryHolidays.getHolidays(data.cityDetails); //Sub updateHolidayUI
+                updateTimeUI(data, localTime);
+                updateWeatherUI(data);
             }).catch(err => console.log(err));
         }).catch(err => console.log(err));
 }
@@ -182,7 +188,7 @@ if(localStorage.getItem('city')){
 // setInterval(() => {
 //     if(timeSet){
 //         cityTime.getTime(forecast.cityDetails).then((data) => {
-//             updateTime(data);
+//             updateTimeUI(data);
 //         }).catch(err => console.log(err));
 //     }
 // }, 10000);

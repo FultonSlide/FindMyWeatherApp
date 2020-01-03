@@ -13,6 +13,7 @@ const forecastIconThree = document.querySelector('.forecast-icon-three img');
 const content = document.querySelector('.content');
 const forecast = new Forecast();
 const cityTime = new Time();
+const countryHolidays = new Holidays();
 let timeSet = false;
 
 const getDayDate = (dateString) => {
@@ -159,6 +160,7 @@ cityForm.addEventListener('submit', (e) => {
     forecast.updateCity(city)
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
+                countryHolidays.getMonthlyHolidays(data.cityDetails);
                 updateTime(data, localTime);
                 updateUI(data);
             }).catch(err => console.log(err));
@@ -170,6 +172,7 @@ if(localStorage.getItem('city')){
     forecast.updateCity(localStorage.getItem('city'))
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
+                countryHolidays.getMonthlyHolidays(data.cityDetails);
                 updateTime(data, localTime);
                 updateUI(data);
             }).catch(err => console.log(err));

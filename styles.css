@@ -29,8 +29,12 @@ body {
     margin-bottom: 1rem;
     margin-top: 55px;
 }
-.weather-details {
+.holiday-details {
     margin-top: 55px;
+    height: auto;
+}
+.holiday-data p {
+    margin: 3em 0;
 }
 .card {
     max-width: 400px;

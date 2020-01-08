@@ -1,6 +1,8 @@
 const cityForm = document.querySelector('form');
 const card = document.querySelector('.card');
 const details = document.querySelector('.details-weather');
+const holidayDetails = document.querySelector('.holiday-details .details');
+const holidayData = document.querySelector('.holiday-data');
 const detailsForecastOne = document.querySelector('.details-forecast-one');
 const detailsForecastTwo = document.querySelector('.details-forecast-two');
 const detailsForecastThree = document.querySelector('.details-forecast-three');
@@ -41,8 +43,18 @@ const getDayDate = (dateString) => {
 }
 
 //Updates holiday card with national holidays this month
-const updateHolidayUI = () => {
-    //countryHoliday async call and UI update here...
+const updateHolidayUI = (data) => {
+    holidayData.innerHTML = '';
+
+    countryHolidays.getHolidays(data.cityDetails)
+        .then((data) => {
+            data.response.holidays.forEach((holiday) => {
+                let p = document.createElement("P");
+                let holidayText = document.createTextNode(`${holiday.name} ${holiday.date.datetime.day}/${holiday.date.datetime.month}/${holiday.date.datetime.year}`);
+                p.appendChild(holidayText);
+                holidayData.appendChild(p);
+            });
+        }).catch((err) => console.log(err));
 };
 
 //Updates the local time of the city in the UI
@@ -166,7 +178,7 @@ cityForm.addEventListener('submit', (e) => {
     forecast.updateCity(city)
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
-                countryHolidays.getHolidays(data.cityDetails); //Sub updateHolidayUI
+                updateHolidayUI(data);
                 updateTimeUI(data, localTime);
                 updateWeatherUI(data);
             }).catch(err => console.log(err));
@@ -178,7 +190,7 @@ if(localStorage.getItem('city')){
     forecast.updateCity(localStorage.getItem('city'))
         .then(data => {
             cityTime.getTime(data.cityDetails).then((localTime) => {
-                countryHolidays.getHolidays(data.cityDetails); //Sub updateHolidayUI
+                updateHolidayUI(data);
                 updateTimeUI(data, localTime);
                 updateWeatherUI(data);
             }).catch(err => console.log(err));

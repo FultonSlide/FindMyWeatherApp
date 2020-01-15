@@ -13,6 +13,11 @@ const forecastIconOne = document.querySelector('.forecast-icon-one img');
 const forecastIconTwo = document.querySelector('.forecast-icon-two img');
 const forecastIconThree = document.querySelector('.forecast-icon-three img');
 const content = document.querySelector('.content');
+const mobileBtn = document.querySelector('.mobile-nav');
+const conditionsCard = document.querySelector('.conditions-card');
+const weatherInfo = document.querySelector('.weather-info');
+const forecastCard = document.querySelector('.weather-forecast'); 
+const weatherWarnings = document.querySelector('.weather-warnings .details');
 const forecast = new Forecast();
 const cityTime = new Time();
 const countryHolidays = new Holidays();
@@ -42,18 +47,47 @@ const getDayDate = (dateString) => {
     return `${dayOfWeek} ${dateStr}`;
 }
 
+//Updates weather warning card with weather warnings for the next 24 hours
+const updateWeatherWarningsUI = (data) => {
+    forecast.getWeatherAlarm(data.cityDetails.Key)
+        .then((data) => {
+            console.log(data);
+            if(data.length > 0){
+                weatherWarnings.innerHTML = `
+                    <h5 class="my-3">Weather Warnings</h5>
+                    <div class="my-3">[Description]</div>
+                `;
+            } else {
+                weatherWarnings.innerHTML = `
+                    <h5 class="my-3">Weather Warnings</h5>
+                    <div class="my-3">No Current Weather Warnings</div>
+                `;
+            }
+            
+        }).catch((err) => console.log(err));
+};
+
 //Updates holiday card with national holidays this month
 const updateHolidayUI = (data) => {
     holidayData.innerHTML = '';
 
     countryHolidays.getHolidays(data.cityDetails)
         .then((data) => {
-            data.response.holidays.forEach((holiday) => {
-                let p = document.createElement("P");
-                let holidayText = document.createTextNode(`${holiday.name} ${holiday.date.datetime.day}/${holiday.date.datetime.month}/${holiday.date.datetime.year}`);
-                p.appendChild(holidayText);
-                holidayData.appendChild(p);
-            });
+            if(data.response.holidays.length > 0){
+                data.response.holidays.forEach((holiday) => {
+                    let p = document.createElement("P");
+                    let holidayText = document.createTextNode(`${holiday.name} ${holiday.date.datetime.day}/${holiday.date.datetime.month}/${holiday.date.datetime.year}`);
+                    p.appendChild(holidayText);
+                    holidayData.appendChild(p);
+                });
+            } else {
+                holidayData.innerHTML = `
+                    <div>
+                        <p>No National Holidays this month</p>
+                    </div>
+                `;
+            }
+            
         }).catch((err) => console.log(err));
 };
 
@@ -162,6 +196,26 @@ const updateWeatherUI = (data) => {
     }
 };
 
+//Mobile Nav bar click event listener
+mobileBtn.addEventListener('click', (e) => {
+    if(e.target.id == 'Weather'){
+        conditionsCard.classList.add('show');
+        //conditions-card display
+        weatherInfo.classList.remove('show');
+        forecastCard.classList.remove('show');
+    } else if(e.target.id == 'Forecast'){
+        forecastCard.classList.add('show');
+        //forecast-info display
+        conditionsCard.classList.remove('show');
+        weatherInfo.classList.remove('show');
+    } else if(e.target.id == 'Warnings'){
+        weatherInfo.classList.add('show');
+        //weather-info display
+        forecastCard.classList.remove('show');
+        conditionsCard.classList.remove('show');
+    }
+});
+
 //Listens for form submission
 cityForm.addEventListener('submit', (e) => {
     //Prevent default action
@@ -181,6 +235,7 @@ cityForm.addEventListener('submit', (e) => {
                 updateHolidayUI(data);
                 updateTimeUI(data, localTime);
                 updateWeatherUI(data);
+                updateWeatherWarningsUI(data);
             }).catch(err => console.log(err));
         })
         .catch(err => console.log(err));
@@ -193,6 +248,7 @@ if(localStorage.getItem('city')){
                 updateHolidayUI(data);
                 updateTimeUI(data, localTime);
                 updateWeatherUI(data);
+                updateWeatherWarningsUI(data);
             }).catch(err => console.log(err));
         }).catch(err => console.log(err));
 }

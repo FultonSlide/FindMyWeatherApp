@@ -1,6 +1,6 @@
 class Time {
     constructor(){
-        this.timeURI = 'http://worldtimeapi.org/api/timezone/';
+        this.timeURI = 'https://worldtimeapi.org/api/timezone/';
     }
 
     // Gets the local time of the user entered city

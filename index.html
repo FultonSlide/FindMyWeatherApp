@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon/findmyweatherfavicon.png">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/813cf755af.js" crossorigin="anonymous"></script>
     <title>FindMyWeatherApp</title>
 </head>
 <body>
@@ -14,9 +16,17 @@
     <div class="container my-5 mx-auto">
         <h1 class="text-muted text-center my-4">FindMyWeatherApp</h1>
 
+        <ul class="mobile-nav">
+            <li class="mobile-nav-item"><a class="btn btn-secondary" id="Weather">Current Weather</a></li>
+            <li class="mobile-nav-item"><a class="btn btn-secondary" id="Forecast">Forecast</a></li>
+            <li class="mobile-nav-item"><a class="btn btn-secondary" id="Warnings">Warnings & Holidays</a></li>
+        </ul>
         <form class="change-location my-4 text-center text-muted">
             <label for="city">Enter a location for weather information</label>
             <input type="text" name="city" class="form-control p-4">
+            <button type="submit" class="form-submit btn btn-secondary">
+                <i class="fa fa-search"></i>
+            </button>
         </form>
         
         <div class="content d-none">
@@ -37,7 +47,7 @@
                 </div>
 
                 <div class="holiday-details info-card card shadow-sm rounded">
-                    <div class="icon-warning bg-light mx-auto text-center">
+                    <div class="icon-holiday bg-light mx-auto text-center">
                         <img src="img/icons/7.svg" alt="">
                     </div>
                     <div class="text-muted text-uppercase text-center details">
@@ -50,7 +60,7 @@
             </div>
 
             <!-- Weather Conditions -->
-            <div class="conditions-card card shadow-sm rounded">
+            <div class="conditions-card card shadow-sm rounded show">
                 <img src="https://via.placeholder.com/400x300" alt="placeholder" class="time-weather card-img-top">
                 <div class="text-uppercase text-center current-time">
                     <h5 class="my-3">Local Time:</h5>

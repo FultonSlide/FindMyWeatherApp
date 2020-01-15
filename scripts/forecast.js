@@ -1,9 +1,10 @@
 class Forecast{
     constructor(){
-        this.key = 'DrRQ44OKJuI92G5JOimm0xbsF4MTZ9cV';
-        this.weatherURI = 'http://dataservice.accuweather.com/currentconditions/v1/';
-        this.cityURI = 'http://dataservice.accuweather.com/locations/v1/cities/search';
-        this.forecastURI = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
+        this.key = 'FyLLGYqZpdQqA9GSI7L9CGxkPSGgXZXK';
+        this.weatherURI = 'https://dataservice.accuweather.com/currentconditions/v1/';
+        this.cityURI = 'https://dataservice.accuweather.com/locations/v1/cities/search';
+        this.forecastURI = 'https://dataservice.accuweather.com/forecasts/v1/daily/5day/';
+        this.weatherAlarmURI = 'https://dataservice.accuweather.com/alarms/v1/1day/';
         this.cityDetails = '';
         this.cityWeather = '';
         this.cityForecast = '';
@@ -41,6 +42,14 @@ class Forecast{
     async getForecast(cityKey){
         const query = `${cityKey}?apikey=${this.key}&details=true&metric=true`;
         const response = await fetch(this.forecastURI + query);
+        const data = await response.json();
+        return data;
+    }
+
+    //Get weather warnings
+    async getWeatherAlarm(cityKey){
+        const query = `${cityKey}?apikey=${this.key}`;
+        const response = await fetch(this.weatherAlarmURI + query);
         const data = await response.json();
         return data;
     }

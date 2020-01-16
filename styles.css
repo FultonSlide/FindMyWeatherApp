@@ -1,5 +1,5 @@
 body {
-    background: #eeedec;
+    background: linear-gradient(160deg, #44a0dd 0%, #76bff0 100%);
     letter-spacing: 0.2em;
     font-size: 0.8em;
 }
@@ -22,9 +22,11 @@ body {
 }
 .card {
     /* background: transparent; */
+    background-color: #4598cf;
     max-width: 400px;
     margin-left: 5px;
     margin-right: 5px;
+    border-radius: 10px;
 }
 .weather-info {
     display: grid;
@@ -81,17 +83,20 @@ body {
     .mobile-nav-item {
         display: inline-block;
         margin: 0.1rem;
-        color: black;
+        color: white;
+        background-color: #337bac;
     }
     .form-control {
         display: inline-block;
+        width: 80%
     }
     .form-submit {
         display: inline-block;
         border-radius: 50%;
         height: 50px;
         width: 50px;
-        color: black;
+        color: white;
+        background-color: #337bac;
     }
     .conditions-card, .weather-info, .weather-forecast {
         display: none;

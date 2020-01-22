@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900&display=swap');
+
 body {
     background: linear-gradient(160deg, #44a0dd 0%, #76bff0 100%);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     font-size: 0.8em;
+    font-family: 'Poppins', sans-serif;
 }
 .container {
     max-width: 1350px;
@@ -15,6 +18,10 @@ body {
 .form-control{
     max-width: 450px;
     margin: 0 auto;
+}
+.morrow-logo {
+    display: flex;
+    width: 400px;
 }
 .content {
     display: grid;

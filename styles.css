@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900&display=swap');
 
 body {
-    background: linear-gradient(160deg, #44a0dd 0%, #76bff0 100%);
+    background: linear-gradient(160deg, #65B5FF 0%, #76bff0 100%);
     letter-spacing: 0.15em;
     font-size: 0.8em;
     font-family: 'Poppins', sans-serif;
@@ -28,8 +28,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
 }
 .card {
-    /* background: transparent; */
-    background-color: #4598cf;
+    background-color: rgb(25, 104, 221);
     max-width: 400px;
     margin-left: 5px;
     margin-right: 5px;
@@ -91,7 +90,7 @@ body {
         display: inline-block;
         margin: 0.1rem;
         color: white;
-        background-color: #337bac;
+        background-color: rgb(25, 104, 221);
     }
     .form-control {
         display: inline-block;
@@ -103,7 +102,7 @@ body {
         height: 50px;
         width: 50px;
         color: white;
-        background-color: #337bac;
+        background-color: rgb(25, 104, 221);
     }
     .conditions-card, .weather-info, .weather-forecast {
         display: none;
